@@ -66,5 +66,7 @@ def test_theme_flag_helper():
         assert get_theme() is CHARM
         assert shared.apply_theme_flag(["--theme=solarized-light"]) is SOLARIZED_LIGHT
         assert get_theme() is SOLARIZED_LIGHT
+        assert shared.wants_fill(["--fill"]) is True
+        assert shared.wants_fill([]) is False
     finally:
         set_theme(SOLARIZED_DARK)

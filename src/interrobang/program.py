@@ -32,12 +32,21 @@ from .command import (
     _SetWindowTitle,
     _ShowCursor,
 )
+from ._ansi import string_width
 from .key import KeyMsg
 from .message import QuitMsg, WindowSizeMsg
 from .model import Model
 from .renderer import Renderer
-from .style import Profile, set_color_profile, set_has_dark_background
+from .style import (
+    Color,
+    Profile,
+    get_color_profile,
+    get_has_dark_background,
+    set_color_profile,
+    set_has_dark_background,
+)
 from .terminal_io import Terminal
+from .theme import get_theme
 
 __all__ = ["Program", "run", "detect_profile", "detect_dark_background"]
 
@@ -97,6 +106,10 @@ class Program:
             when the output is not a real TTY.
         catch_interrupt: If true (the default), Ctrl+C quits the program instead
             of being delivered to ``update``.
+        fill_background: Paint the active theme's background and text color across
+            the whole screen, so the app looks fully themed regardless of the
+            terminal's own colors. Takes effect with ``alt_screen=True`` and
+            re-reads the theme each frame (so ``set_theme`` recolors everything).
     """
 
     def __init__(
@@ -109,11 +122,15 @@ class Program:
         output: IO | None = None,
         headless: bool = False,
         catch_interrupt: bool = True,
+        fill_background: bool = False,
     ):
         self.model = model
         self._alt_screen = alt_screen
         self._mouse = mouse
         self._catch_interrupt = catch_interrupt
+        self._fill_background = fill_background
+        self._width = 0
+        self._height = 0
         self._terminal = Terminal(input, output)
         self._input_provided = input is not None
         self._manage_tty = (not headless) and self._terminal.is_tty()
@@ -162,6 +179,7 @@ class Program:
                 self._install_signals()
 
             width, height = self._terminal.get_size()
+            self._width, self._height = width, height
             self._start_input()
 
             init = getattr(self.model, "init", None)
@@ -169,7 +187,7 @@ class Program:
                 self._dispatch(init())
 
             self.send(WindowSizeMsg(width, height))
-            self._renderer.render(self.model.view())
+            self._render_view()
             self._loop()
         finally:
             self._teardown()
@@ -187,6 +205,7 @@ class Program:
             if self._handle_control(msg):
                 continue
             if isinstance(msg, WindowSizeMsg):
+                self._width, self._height = msg.width, msg.height
                 self._renderer.reset()  # size changed: force a full repaint
             result = self.model.update(msg)
             if isinstance(result, tuple):
@@ -195,7 +214,7 @@ class Program:
                 self.model, cmd = result, None
             self._final_model = self.model
             self._dispatch(cmd)
-            self._renderer.render(self.model.view())
+            self._render_view()
 
     def _handle_control(self, msg: object) -> bool:
         kind = type(msg)
@@ -203,12 +222,12 @@ class Program:
             if self._manage_tty:
                 self._terminal.enter_alt_screen()
             self._renderer.set_alt_screen(True)
-            self._renderer.render(self.model.view())
+            self._render_view()
         elif kind is _ExitAltScreen:
             if self._manage_tty:
                 self._terminal.exit_alt_screen()
             self._renderer.set_alt_screen(False)
-            self._renderer.render(self.model.view())
+            self._render_view()
         elif kind is _HideCursor:
             if self._manage_tty:
                 self._terminal.hide_cursor()
@@ -225,13 +244,53 @@ class Program:
             self._renderer.reset()
             if self._manage_tty:
                 self._terminal.clear()
-            self._renderer.render(self.model.view())
+            self._render_view()
         elif kind is _SetWindowTitle:
             if self._manage_tty:
                 self._terminal.set_title(msg.title)
         else:
             return False
         return True
+
+    # -- rendering ---------------------------------------------------------
+
+    def _render_view(self) -> None:
+        if self._renderer is not None:
+            self._renderer.render(self._frame(self.model.view()))
+
+    def _frame(self, view: str) -> str:
+        """Optionally paint the theme background+text across the whole screen."""
+        if not (self._fill_background and self._renderer is not None and self._renderer.alt_screen):
+            return view
+        base = self._base_sgr()
+        if not base:
+            return view
+        width, height = self._width, self._height
+        reset = "\x1b[0m"
+        lines = []
+        for line in view.split("\n"):
+            if width:
+                gap = width - string_width(line)
+                if gap > 0:
+                    line = line + " " * gap
+            # Re-assert the base after any inner reset so the fill persists.
+            lines.append(base + line.replace(reset, reset + base) + reset)
+        if height:
+            if len(lines) < height:
+                blank = base + (" " * width) + reset
+                lines.extend([blank] * (height - len(lines)))
+            else:
+                lines = lines[:height]
+        return "\n".join(lines)
+
+    def _base_sgr(self) -> str:
+        theme = get_theme()
+        profile = get_color_profile()
+        dark = get_has_dark_background()
+        fg = Color(theme.text).sequence(profile, dark, background=False)
+        bg = Color(theme.background).sequence(profile, dark, background=True)
+        params = ";".join(p for p in (fg, bg) if p)
+        return f"\x1b[{params}m" if params else ""
 
     # -- commands ----------------------------------------------------------
 

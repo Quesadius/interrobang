@@ -201,6 +201,7 @@ final_model = program.run()
 | `input` / `output` | streams (default stdin/stdout; override for tests) |
 | `headless` | skip raw mode, cursor, and signal handling |
 | `catch_interrupt` | if true (default), Ctrl+C quits instead of reaching `update` |
+| `fill_background` | paint the active theme's background across the alt screen (see the [styling guide](styling.md#theming-the-whole-screen)) |
 
 `run()` blocks until the program quits, then returns the final model — handy for
 reading a result out of, say, a prompt.

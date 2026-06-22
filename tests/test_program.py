@@ -322,6 +322,58 @@ class TestAltScreenDrive:
         assert "\x1b[H" in out  # alt-screen renderer homes the cursor
 
 
+class _Hi:
+    def init(self):
+        return None
+
+    def update(self, msg):
+        return self, None
+
+    def view(self):
+        return "hi"
+
+
+class TestFillBackground:
+    def test_paints_theme_background(self, monkeypatch):
+        monkeypatch.setenv("COLORTERM", "truecolor")
+        buf = io.StringIO()
+        program = Program(
+            _Hi(), output=buf, headless=True, alt_screen=True,
+            fill_background=True, catch_interrupt=False,
+        )
+        thread, errors = _run_in_thread(program)
+        program.quit()
+        thread.join(timeout=3.0)
+        assert "48;2;0;43;54" in buf.getvalue()  # Solarized Dark background
+
+    def test_no_fill_without_alt_screen(self, monkeypatch):
+        monkeypatch.setenv("COLORTERM", "truecolor")
+        buf = io.StringIO()
+        program = Program(
+            _Hi(), output=buf, headless=True, alt_screen=False,
+            fill_background=True, catch_interrupt=False,
+        )
+        thread, errors = _run_in_thread(program)
+        program.quit()
+        thread.join(timeout=3.0)
+        assert "48;2;0;43;54" not in buf.getvalue()
+
+    def test_fill_follows_active_theme(self, monkeypatch):
+        from interrobang import SOLARIZED_LIGHT, set_theme
+
+        monkeypatch.setenv("COLORTERM", "truecolor")
+        set_theme(SOLARIZED_LIGHT)
+        buf = io.StringIO()
+        program = Program(
+            _Hi(), output=buf, headless=True, alt_screen=True,
+            fill_background=True, catch_interrupt=False,
+        )
+        thread, errors = _run_in_thread(program)
+        program.quit()
+        thread.join(timeout=3.0)
+        assert "48;2;253;246;227" in buf.getvalue()  # Solarized Light background
+
+
 class TestDetectProfile:
     def test_no_color(self):
         assert detect_profile({"NO_COLOR": "1"}) == Profile.ASCII

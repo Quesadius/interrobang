@@ -250,6 +250,26 @@ updates. It resets theme-derived styles to the new theme's defaults, so if you
 mix custom overrides with theming, apply your overrides *after* `set_theme`.
 (Explicit constructor styles, like `Spinner(DOTS, my_style)`, are preserved.)
 
+### Theming the whole screen
+
+By default, theming colors component *accents*; ordinary body text uses the
+terminal's own foreground, so a light theme still shows text in the terminal's
+color. To make an app look fully themed — light or dark — **regardless of the
+user's terminal**, run it with `fill_background`:
+
+```python
+irb.run(model, alt_screen=True, fill_background=True)
+```
+
+The runtime paints the active theme's `background` and `text` across the entire
+alt screen and renders your view on top, re-reading the theme each frame — so a
+runtime `set_theme(SOLARIZED_LIGHT)` repaints the whole backdrop, not just the
+accents. Every example supports it via `--fill`:
+
+```bash
+python examples/dashboard.py --theme solarized-light --fill
+```
+
 A `Theme` is a bundle of semantic colors. Build your own and use it like the
 built-ins:
 

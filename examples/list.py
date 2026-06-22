@@ -49,9 +49,8 @@ class Model:
 
 
 if __name__ == "__main__":
-    from _shared import apply_theme_flag
+    from _shared import run_example
 
-    apply_theme_flag()
-    final = irb.run(Model(), alt_screen=True)
+    final = run_example(Model())
     if final.chosen:
         print(f"You chose: {final.chosen}")
