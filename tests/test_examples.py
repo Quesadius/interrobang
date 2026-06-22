@@ -16,7 +16,9 @@ from interrobang import KeyMsg, KeyType
 from interrobang.testing import drive
 
 EXAMPLES_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "examples"))
-EXAMPLE_FILES = sorted(f for f in os.listdir(EXAMPLES_DIR) if f.endswith(".py"))
+EXAMPLE_FILES = sorted(
+    f for f in os.listdir(EXAMPLES_DIR) if f.endswith(".py") and not f.startswith("_")
+)
 
 
 def load_example(filename):
@@ -52,3 +54,17 @@ def test_example_runs(filename):
             module.main()
     else:  # pragma: no cover - every example is one of the two shapes above
         pytest.fail(f"{filename} has neither a model nor a main()")
+
+
+def test_theme_flag_helper():
+    from interrobang import CHARM, SOLARIZED_DARK, SOLARIZED_LIGHT, get_theme, set_theme
+
+    shared = load_example("_shared.py")
+    try:
+        assert shared.apply_theme_flag([]) is None
+        assert shared.apply_theme_flag(["--theme", "charm"]) is CHARM
+        assert get_theme() is CHARM
+        assert shared.apply_theme_flag(["--theme=solarized-light"]) is SOLARIZED_LIGHT
+        assert get_theme() is SOLARIZED_LIGHT
+    finally:
+        set_theme(SOLARIZED_DARK)

@@ -46,4 +46,7 @@ class Counter:
 
 
 if __name__ == "__main__":
+    from _shared import apply_theme_flag
+
+    apply_theme_flag()
     irb.run(Counter(), alt_screen=True)

@@ -27,7 +27,7 @@ from dataclasses import dataclass
 
 from ..command import Cmd
 from ..style import Style
-from ..theme import get_theme
+from ..theme import Theme, get_theme, register_themed
 
 __all__ = [
     "SpinnerStyle",
@@ -85,9 +85,16 @@ class Spinner:
 
     def __init__(self, spinner: SpinnerStyle = DOTS, style: Style | None = None):
         self.spinner = spinner
-        self.style = style if style is not None else Style().foreground(get_theme().selection)
+        self._explicit_style = style is not None
+        self.style = style if style is not None else Style()
         self.frame = 0
         self.id = next(Spinner._ids)
+        register_themed(self)
+        self._apply_theme(get_theme())
+
+    def _apply_theme(self, theme: Theme) -> None:
+        if not self._explicit_style:
+            self.style = Style().foreground(theme.selection)
 
     @property
     def tick(self) -> Cmd:

@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from .._ansi import string_width
 from ..style import Color, Style, parse_hex
-from ..theme import get_theme
+from ..theme import Theme, get_theme, register_themed
 
 __all__ = ["Progress"]
 
@@ -29,20 +29,26 @@ class Progress:
     """A progress bar that fills from left to right."""
 
     def __init__(self, width: int = 40):
-        theme = get_theme()
         self.width = width
         self.percent: float = 0.0
         self.full_char: str = "█"
         self.empty_char: str = "░"
         self.show_percentage: bool = True
-        self.percent_style: Style = Style().foreground(theme.muted)
-        self.empty_style: Style = Style().foreground(theme.muted)
+        self.percent_style: Style = Style()
+        self.empty_style: Style = Style()
         self._solid: Color | None = None
-        # By default the bar fills with the theme's gradient.
-        self._gradient: tuple[tuple[int, int, int], tuple[int, int, int]] | None = (
-            parse_hex(theme.gradient_start),
-            parse_hex(theme.gradient_end),
-        )
+        self._gradient: tuple[tuple[int, int, int], tuple[int, int, int]] | None = None
+        self._custom_fill = False  # set once the user picks a solid/gradient
+        register_themed(self)
+        self._apply_theme(get_theme())
+
+    def _apply_theme(self, theme: Theme) -> None:
+        self.percent_style = Style().foreground(theme.muted)
+        self.empty_style = Style().foreground(theme.muted)
+        if not self._custom_fill:
+            # Default fill is the theme's gradient.
+            self._gradient = (parse_hex(theme.gradient_start), parse_hex(theme.gradient_end))
+            self._solid = None
 
     # -- configuration -----------------------------------------------------
 
@@ -50,12 +56,14 @@ class Progress:
         """Fill the bar with a single solid color (chainable)."""
         self._solid = Color(color)
         self._gradient = None
+        self._custom_fill = True
         return self
 
     def with_gradient(self, start: str, end: str) -> "Progress":
         """Fill the bar with a left-to-right color gradient (chainable)."""
         self._gradient = (parse_hex(start), parse_hex(end))
         self._solid = None
+        self._custom_fill = True
         return self
 
     # -- state -------------------------------------------------------------

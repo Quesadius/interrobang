@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import termshot  # noqa: E402
 
-from interrobang import SOLARIZED_DARK, get_theme, set_theme  # noqa: E402
+from interrobang import CHARM, SOLARIZED_DARK, SOLARIZED_LIGHT, get_theme, set_theme  # noqa: E402
 from interrobang.components import (  # noqa: E402
     DOTS,
     Column,
@@ -277,6 +277,41 @@ ANIMATIONS = {
     "progress": ("progress", progress_frames, 12.0),
 }
 
+THEME_PREVIEWS = {
+    "theme-solarized-dark": SOLARIZED_DARK,
+    "theme-solarized-light": SOLARIZED_LIGHT,
+    "theme-charm": CHARM,
+}
+
+
+def theme_panel(theme) -> str:
+    """A compact panel (spinner + progress + list) rendered in *theme*."""
+    sp = Spinner(DOTS)
+    sp.frame = 2
+    bar = Progress(width=24)
+    lst = List([Item("Alpha"), Item("Beta"), Item("Gamma")], width=24, height=8)
+    lst.show_description = False
+    lst.show_status_bar = False
+    lst.cursor = 1
+    title = (
+        Style().bold().foreground(theme.on_primary).background(theme.primary).padding(0, 1)
+        .render(f" {theme.name} ")
+    )
+    body = join_vertical(0.0, f"{sp.view()} loading...", "", bar.view_as(0.6), "", lst.view())
+    return title + "\n\n" + body
+
+
+def _set_chrome(theme) -> None:
+    termshot.BG = theme.background
+    termshot.TITLEBAR = theme.surface
+    termshot.FG = theme.text
+    termshot.TITLE_FG = theme.muted
+    termshot.TRAFFIC = (
+        ("#dc322f", "#b58900", "#859900")
+        if theme.name.startswith("Solarized")
+        else ("#ff5f56", "#febc2e", "#28c840")
+    )
+
 
 def main() -> None:
     os.makedirs(IMAGES_DIR, exist_ok=True)
@@ -291,6 +326,14 @@ def main() -> None:
         with open(os.path.join(IMAGES_DIR, f"{name}.svg"), "w", encoding="utf-8") as f:
             f.write(svg)
         print(f"wrote docs/images/{name}.svg  (animated, {len(svg)} bytes)")
+
+    for name, theme in THEME_PREVIEWS.items():
+        set_theme(theme)
+        _set_chrome(theme)
+        svg = render_svg(theme_panel(theme), theme.name)
+        with open(os.path.join(IMAGES_DIR, f"{name}.svg"), "w", encoding="utf-8") as f:
+            f.write(svg)
+        print(f"wrote docs/images/{name}.svg  ({len(svg)} bytes)")
 
 
 if __name__ == "__main__":

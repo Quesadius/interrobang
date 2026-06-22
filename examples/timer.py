@@ -46,4 +46,7 @@ class Model:
 
 
 if __name__ == "__main__":
+    from _shared import apply_theme_flag
+
+    apply_theme_flag()
     irb.run(Model(), alt_screen=True)

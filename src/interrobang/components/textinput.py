@@ -23,7 +23,7 @@ from enum import Enum, auto
 
 from ..key import KeyMsg, KeyType
 from ..style import Style
-from ..theme import get_theme
+from ..theme import Theme, get_theme, register_themed
 from .._ansi import string_width
 
 __all__ = ["EchoMode", "TextInput"]
@@ -50,11 +50,16 @@ class TextInput:
         self.width: int = 0  # 0 = unlimited (no horizontal scrolling)
         self.echo: EchoMode = EchoMode.NORMAL
         self.echo_char: str = "•"
-        theme = get_theme()
-        self.prompt_style: Style = Style().foreground(theme.primary)
+        self.prompt_style: Style = Style()
         self.text_style: Style = Style()
-        self.placeholder_style: Style = Style().foreground(theme.muted)
+        self.placeholder_style: Style = Style()
         self.cursor_style: Style = Style().reverse()
+        register_themed(self)
+        self._apply_theme(get_theme())
+
+    def _apply_theme(self, theme: Theme) -> None:
+        self.prompt_style = Style().foreground(theme.primary)
+        self.placeholder_style = Style().foreground(theme.muted)
 
     # -- state helpers -----------------------------------------------------
 

@@ -15,7 +15,7 @@ from enum import Enum, auto
 
 from ..key import KeyMsg
 from ..style import Style
-from ..theme import get_theme
+from ..theme import Theme, get_theme, register_themed
 
 __all__ = ["PaginatorType", "Paginator"]
 
@@ -37,7 +37,12 @@ class Paginator:
         self.type = PaginatorType.DOTS
         self.active_dot = "●"
         self.inactive_dot = "○"
-        theme = get_theme()
+        self.active_style = Style()
+        self.inactive_style = Style()
+        register_themed(self)
+        self._apply_theme(get_theme())
+
+    def _apply_theme(self, theme: Theme) -> None:
         self.active_style = Style().foreground(theme.primary)
         self.inactive_style = Style().foreground(theme.muted)
 

@@ -21,7 +21,7 @@ from dataclasses import dataclass
 
 from ..key import KeyMsg
 from ..style import Color, Style
-from ..theme import get_theme
+from ..theme import Theme, get_theme, register_themed
 
 __all__ = ["FileEntry", "FilePicker"]
 
@@ -50,9 +50,15 @@ class FilePicker:
 
         self.cursor_prefix = "> "
         self.normal_prefix = "  "
-        theme = get_theme()
-        self.dir_style = Style().foreground(theme.primary).bold()
         self.file_style = Style()
+        self.dir_style = Style()
+        self.selected_style = Style()
+        self.path_style = Style()
+        register_themed(self)
+        self._apply_theme(get_theme())
+
+    def _apply_theme(self, theme: Theme) -> None:
+        self.dir_style = Style().foreground(theme.primary).bold()
         self.selected_style = Style().foreground(theme.selection).bold()
         self.path_style = Style().foreground(theme.muted)
 

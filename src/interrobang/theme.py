@@ -21,9 +21,18 @@ screenshot tooling; an app may also use them to paint its own backdrop.
 
 from __future__ import annotations
 
+import weakref
 from dataclasses import dataclass
 
-__all__ = ["Theme", "SOLARIZED_DARK", "CHARM", "set_theme", "get_theme"]
+__all__ = [
+    "Theme",
+    "SOLARIZED_DARK",
+    "SOLARIZED_LIGHT",
+    "CHARM",
+    "set_theme",
+    "get_theme",
+    "register_themed",
+]
 
 
 @dataclass(frozen=True)
@@ -68,6 +77,25 @@ SOLARIZED_DARK = Theme(
     gradient_end="#859900",  # green
 )
 
+#: Solarized Light -- the same accents on Schoonover's light base.
+SOLARIZED_LIGHT = Theme(
+    name="Solarized Light",
+    background="#fdf6e3",  # base3
+    surface="#eee8d5",  # base2
+    text="#657b83",  # base00
+    primary="#268bd2",  # blue
+    secondary="#6c71c4",  # violet
+    selection="#d33682",  # magenta
+    on_primary="#fdf6e3",  # base3
+    on_selection="#fdf6e3",  # base3
+    bright="#586e75",  # base01 (dark emphasis on a light background)
+    muted="#93a1a1",  # base1
+    subtle="#586e75",  # base01
+    faint="#eee8d5",  # base2
+    gradient_start="#268bd2",  # blue
+    gradient_end="#859900",  # green
+)
+
 #: The look interrobang shipped with originally, inspired by Charm's palette.
 CHARM = Theme(
     name="Charm",
@@ -89,11 +117,35 @@ CHARM = Theme(
 
 _active_theme: Theme = SOLARIZED_DARK
 
+# Live, theme-aware components register here (weakly, so they can be GC'd) so
+# that changing the theme re-styles everything currently on screen.
+_themed: "weakref.WeakSet" = weakref.WeakSet()
+
+
+def register_themed(component: object) -> None:
+    """Register a component to be re-styled whenever the theme changes.
+
+    The component must expose ``_apply_theme(theme)``. Components do this for
+    themselves on construction; you rarely need to call it directly.
+    """
+    _themed.add(component)
+
 
 def set_theme(theme: Theme) -> None:
-    """Set the active theme. Components constructed afterwards use its colors."""
+    """Set the active theme and re-style every live component.
+
+    Components built afterwards use the new colors, and any already-constructed
+    component that registered itself is re-styled in place -- so switching the
+    theme updates what's already on screen. This resets theme-derived styles to
+    the new theme's defaults, so apply custom style overrides *after*
+    ``set_theme`` if you mix the two.
+    """
     global _active_theme
     _active_theme = theme
+    for component in list(_themed):
+        apply = getattr(component, "_apply_theme", None)
+        if apply is not None:
+            apply(theme)
 
 
 def get_theme() -> Theme:

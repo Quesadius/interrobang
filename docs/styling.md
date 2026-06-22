@@ -229,14 +229,26 @@ s.get_width(), s.get_height(), s.get_padding()
 ## Theming
 
 Components don't hardcode their colors — they read them from the **active
-theme**. interrobang ships two: `SOLARIZED_DARK` (the default) and `CHARM`.
-Switch the whole app's look in one call, *before* you build your components:
+theme**. interrobang ships three: `SOLARIZED_DARK` (the default),
+`SOLARIZED_LIGHT`, and `CHARM`.
+
+| Solarized Dark | Solarized Light | Charm |
+| --- | --- | --- |
+| ![Solarized Dark](images/theme-solarized-dark.svg) | ![Solarized Light](images/theme-solarized-light.svg) | ![Charm](images/theme-charm.svg) |
+
+Switch the whole app's look in one call:
 
 ```python
 import interrobang as irb
 
-irb.set_theme(irb.CHARM)            # or irb.SOLARIZED_DARK (default)
+irb.set_theme(irb.SOLARIZED_LIGHT)   # SOLARIZED_DARK (default) | SOLARIZED_LIGHT | CHARM
 ```
+
+`set_theme` also **re-styles components that already exist** — call it any time
+(even from `update`, e.g. a "toggle light/dark" key) and everything on screen
+updates. It resets theme-derived styles to the new theme's defaults, so if you
+mix custom overrides with theming, apply your overrides *after* `set_theme`.
+(Explicit constructor styles, like `Spinner(DOTS, my_style)`, are preserved.)
 
 A `Theme` is a bundle of semantic colors. Build your own and use it like the
 built-ins:

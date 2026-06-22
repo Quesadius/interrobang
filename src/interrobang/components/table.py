@@ -21,7 +21,7 @@ from .._ansi import truncate
 from ..key import KeyMsg
 from ..style import Color, Style
 from ..style.layout import pad_right
-from ..theme import get_theme
+from ..theme import Theme, get_theme, register_themed
 
 __all__ = ["Column", "Table"]
 
@@ -51,10 +51,15 @@ class Table:
         self.focused = True
         self.column_gap = 1
 
-        theme = get_theme()
+        self.header_style = Style()
+        self.selected_style = Style()
+        self.cell_style = Style()
+        register_themed(self)
+        self._apply_theme(get_theme())
+
+    def _apply_theme(self, theme: Theme) -> None:
         self.header_style = Style().bold().foreground(theme.bright)
         self.selected_style = Style().foreground(theme.on_selection).background(theme.selection)
-        self.cell_style = Style()
 
     # -- data --------------------------------------------------------------
 

@@ -163,17 +163,22 @@ See the [styling gallery](docs/images/styling.svg) and [layout demo](docs/images
 
 ## Theming
 
-Components read their colors from the **active theme**. interrobang ships
-`SOLARIZED_DARK` (the default, shown above) and `CHARM` — switch in one line, or
-define your own `Theme`:
+Components read their colors from the **active theme**. interrobang ships three
+— `SOLARIZED_DARK` (the default), `SOLARIZED_LIGHT`, and `CHARM` — or define your
+own `Theme`:
+
+| Solarized Dark | Solarized Light | Charm |
+| --- | --- | --- |
+| ![Solarized Dark](docs/images/theme-solarized-dark.svg) | ![Solarized Light](docs/images/theme-solarized-light.svg) | ![Charm](docs/images/theme-charm.svg) |
 
 ```python
 import interrobang as irb
 
-irb.set_theme(irb.CHARM)        # or irb.SOLARIZED_DARK
+irb.set_theme(irb.SOLARIZED_LIGHT)   # re-styles components already on screen, too
 ```
 
-See the [styling guide](docs/styling.md#theming) for building custom themes, and
+`set_theme` updates live components, so a "toggle light/dark" key is trivial. See
+the [styling guide](docs/styling.md#theming) for custom themes and
 `examples/themes.py` for a side-by-side.
 
 ## Examples
@@ -189,6 +194,10 @@ run any of them with `python examples/<name>.py`:
 - `mouse.py` — mouse reporting
 - `timer.py` — timers with `tick`
 - `dashboard.py` — a larger app composing several components
+- `themes.py` — the built-in themes side by side
+
+Pass `--theme solarized-light` (or `solarized-dark` / `charm`) to any interactive
+example, e.g. `python examples/dashboard.py --theme solarized-light`.
 
 ## Documentation
 

@@ -34,6 +34,9 @@ class Model:
 
 
 if __name__ == "__main__":
+    from _shared import apply_theme_flag
+
+    apply_theme_flag()
     final = irb.run(Model(), alt_screen=True)
     if final.submitted:
         print(f"Hello, {final.submitted}!")
