@@ -2,15 +2,16 @@
 
 Shows a spinner, an animated progress bar, and a navigable list side by side --
 the kind of layout you build by giving each component its own ``update``/``view``
-and arranging the results with the layout helpers.
+and arranging the results with the layout helpers. Colors come from the active
+theme (Solarized Dark by default); try ``irb.set_theme(irb.CHARM)`` in ``main``.
 """
 
 from dataclasses import dataclass
 
 import interrobang as irb
-from interrobang import KeyMsg, WindowSizeMsg, batch, quit, tick
+from interrobang import KeyMsg, batch, get_theme, quit, tick
 from interrobang.components import DOTS, Item, List, Progress, Spinner
-from interrobang.style import ROUNDED, TOP, Color, Style, join_horizontal, join_vertical
+from interrobang.style import ROUNDED, TOP, Style, join_horizontal, join_vertical
 
 
 @dataclass(frozen=True)
@@ -30,8 +31,9 @@ TASKS = [
 
 class Dashboard:
     def __init__(self):
-        self.spinner = Spinner(DOTS, Style().foreground(Color("#FF7CCB")))
-        self.progress = Progress(width=30).with_gradient("#FF7CCB", "#FDFF8C")
+        self.theme = get_theme()
+        self.spinner = Spinner(DOTS)  # themed accent by default
+        self.progress = Progress(width=30)  # themed gradient by default
         self.list = List(TASKS, width=30, height=10)
         self.list.title = "Pipeline"
         self.list.show_description = False
@@ -56,16 +58,12 @@ class Dashboard:
         return self, batch(*cmds)
 
     def view(self):
+        t = self.theme
         header = (
-            Style()
-            .bold()
-            .foreground(Color("#FAFAFA"))
-            .background(Color("#7D56F4"))
-            .padding(0, 2)
+            Style().bold().foreground(t.on_primary).background(t.primary).padding(0, 2)
             .render("interrobang dashboard ‽")
         )
-
-        status_panel = Style().border(ROUNDED).border_foreground(Color("63")).padding(1, 2).width(36)
+        status_panel = Style().border(ROUNDED).border_foreground(t.secondary).padding(1, 2).width(36)
         status_body = join_vertical(
             0.0,
             f"{self.spinner.view()} working...",
@@ -73,18 +71,15 @@ class Dashboard:
             "Build progress:",
             self.progress.view(),
         )
-
-        list_panel = Style().border(ROUNDED).border_foreground(Color("240")).padding(1, 2)
-
+        list_panel = Style().border(ROUNDED).border_foreground(t.faint).padding(1, 2)
         panels = join_horizontal(
             TOP,
             status_panel.render(status_body),
             "  ",
             list_panel.render(self.list.view()),
         )
-
-        footer = Style().faint().render("↑/↓ move the list · q quit")
-        return f"\n{header}\n\n{panels}\n\n{footer}\n"
+        footer = Style().foreground(t.muted).render("↑/↓ move the list · q quit")
+        return f"\n{header}\n\n{panels}\n\n{footer}"
 
 
 if __name__ == "__main__":

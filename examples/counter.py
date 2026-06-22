@@ -8,8 +8,8 @@ Press up/down (or k/j, or +/-) to change the count, q to quit.
 """
 
 import interrobang as irb
-from interrobang import KeyMsg, quit
-from interrobang.style import Color, Style
+from interrobang import KeyMsg, get_theme, quit
+from interrobang.style import Style
 
 
 class Counter:
@@ -30,9 +30,10 @@ class Counter:
         return self, None
 
     def view(self):
-        title = Style().bold().foreground(Color("#7D56F4"))
-        number = Style().bold().foreground(Color("#FAFAFA")).background(Color("#7D56F4")).padding(0, 2)
-        hint = Style().faint()
+        t = get_theme()
+        title = Style().bold().foreground(t.primary)
+        number = Style().bold().foreground(t.on_primary).background(t.primary).padding(0, 2)
+        hint = Style().foreground(t.muted)
         return "\n".join(
             [
                 title.render("interrobang counter"),

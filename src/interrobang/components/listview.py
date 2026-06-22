@@ -21,6 +21,7 @@ from typing import Any
 
 from ..key import KeyMsg, KeyType
 from ..style import Color, Style
+from ..theme import get_theme
 
 __all__ = ["Item", "List"]
 
@@ -61,14 +62,15 @@ class List:
         self.filtering = False
         self.filter_text = ""
 
-        # Styles.
-        self.title_style = Style().bold().foreground(Color("#FAFAFA")).background(Color("#7D56F4")).padding(0, 1)
-        self.selected_style = Style().foreground(Color("#EE6FF8")).bold()
+        # Styles (defaults come from the active theme).
+        theme = get_theme()
+        self.title_style = Style().bold().foreground(theme.on_primary).background(theme.primary).padding(0, 1)
+        self.selected_style = Style().foreground(theme.selection).bold()
         self.normal_style = Style()
-        self.description_style = Style().faint()
+        self.description_style = Style().foreground(theme.muted)
         self.cursor_prefix = "> "
         self.normal_prefix = "  "
-        self.status_style = Style().faint()
+        self.status_style = Style().foreground(theme.muted)
 
     # -- data --------------------------------------------------------------
 

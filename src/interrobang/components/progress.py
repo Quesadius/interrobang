@@ -12,6 +12,7 @@ from __future__ import annotations
 
 from .._ansi import string_width
 from ..style import Color, Style, parse_hex
+from ..theme import get_theme
 
 __all__ = ["Progress"]
 
@@ -28,15 +29,20 @@ class Progress:
     """A progress bar that fills from left to right."""
 
     def __init__(self, width: int = 40):
+        theme = get_theme()
         self.width = width
         self.percent: float = 0.0
         self.full_char: str = "█"
         self.empty_char: str = "░"
         self.show_percentage: bool = True
-        self.percent_style: Style = Style().faint()
-        self.empty_style: Style = Style().faint()
-        self._solid: Color | None = Color("#7D56F4")
-        self._gradient: tuple[tuple[int, int, int], tuple[int, int, int]] | None = None
+        self.percent_style: Style = Style().foreground(theme.muted)
+        self.empty_style: Style = Style().foreground(theme.muted)
+        self._solid: Color | None = None
+        # By default the bar fills with the theme's gradient.
+        self._gradient: tuple[tuple[int, int, int], tuple[int, int, int]] | None = (
+            parse_hex(theme.gradient_start),
+            parse_hex(theme.gradient_end),
+        )
 
     # -- configuration -----------------------------------------------------
 

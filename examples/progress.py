@@ -15,7 +15,7 @@ class FrameMsg:
 
 class Model:
     def __init__(self):
-        self.bar = Progress(width=50).with_gradient("#FF7CCB", "#FDFF8C")
+        self.bar = Progress(width=50)  # gradient comes from the active theme
         self.done = False
 
     def init(self):

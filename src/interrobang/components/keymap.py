@@ -22,6 +22,7 @@ from dataclasses import dataclass, field
 from ..key import KeyMsg
 from ..style import Color, Style
 from ..style.layout import join_horizontal
+from ..theme import get_theme
 
 __all__ = ["KeyBinding", "Help"]
 
@@ -49,9 +50,10 @@ class Help:
     def __init__(self):
         self.show_all = False
         self.separator = " · "
-        self.key_style = Style().foreground(Color("#909090")).bold()
-        self.desc_style = Style().foreground(Color("#626262"))
-        self.separator_style = Style().foreground(Color("#3C3C3C"))
+        theme = get_theme()
+        self.key_style = Style().foreground(theme.subtle).bold()
+        self.desc_style = Style().foreground(theme.muted)
+        self.separator_style = Style().foreground(theme.faint)
         self.column_gap = 3
 
     def _binding_text(self, binding: KeyBinding) -> str:

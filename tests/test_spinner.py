@@ -7,7 +7,12 @@ from interrobang.testing import strip_ansi
 
 def test_initial_frame():
     s = Spinner(DOTS)
-    assert s.view() == DOTS.frames[0]
+    assert strip_ansi(s.view()) == DOTS.frames[0]
+
+
+def test_default_style_uses_theme_color():
+    # With no explicit style, the spinner picks up the theme's selection color.
+    assert "\x1b[" in Spinner(DOTS).view()
 
 
 def test_tick_advances_frame():

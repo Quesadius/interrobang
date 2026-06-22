@@ -2,6 +2,7 @@
 
 from interrobang import KeyMsg, KeyType
 from interrobang.components import Paginator, PaginatorType
+from interrobang.testing import strip_ansi
 
 
 class TestPageMath:
@@ -93,13 +94,13 @@ class TestView:
     def test_dots(self):
         p = Paginator(per_page=10)
         p.set_total_items(30)
-        assert p.view() == "● ○ ○"
+        assert strip_ansi(p.view()) == "● ○ ○"
 
     def test_dots_active_moves(self):
         p = Paginator(per_page=10)
         p.set_total_items(30)
         p.next_page()
-        assert p.view() == "○ ● ○"
+        assert strip_ansi(p.view()) == "○ ● ○"
 
     def test_arabic(self):
         p = Paginator(per_page=10)

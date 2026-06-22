@@ -3,12 +3,12 @@
 import interrobang as irb
 from interrobang import KeyMsg, quit
 from interrobang.components import DOTS, Spinner
-from interrobang.style import Color, Style
+from interrobang.style import Style
 
 
 class Model:
     def __init__(self):
-        self.spinner = Spinner(DOTS, Style().foreground(Color("#FF7CCB")))
+        self.spinner = Spinner(DOTS)  # accent color comes from the active theme
 
     def init(self):
         return self.spinner.tick

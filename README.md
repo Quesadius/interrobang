@@ -161,6 +161,21 @@ animate when viewed in a browser):
 
 See the [styling gallery](docs/images/styling.svg) and [layout demo](docs/images/layout.svg) too.
 
+## Theming
+
+Components read their colors from the **active theme**. interrobang ships
+`SOLARIZED_DARK` (the default, shown above) and `CHARM` — switch in one line, or
+define your own `Theme`:
+
+```python
+import interrobang as irb
+
+irb.set_theme(irb.CHARM)        # or irb.SOLARIZED_DARK
+```
+
+See the [styling guide](docs/styling.md#theming) for building custom themes, and
+`examples/themes.py` for a side-by-side.
+
 ## Examples
 
 The [`examples/`](examples/) directory has runnable programs for every feature —

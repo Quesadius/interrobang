@@ -226,6 +226,49 @@ s.vertical_frame_size()
 s.get_width(), s.get_height(), s.get_padding()
 ```
 
+## Theming
+
+Components don't hardcode their colors — they read them from the **active
+theme**. interrobang ships two: `SOLARIZED_DARK` (the default) and `CHARM`.
+Switch the whole app's look in one call, *before* you build your components:
+
+```python
+import interrobang as irb
+
+irb.set_theme(irb.CHARM)            # or irb.SOLARIZED_DARK (default)
+```
+
+A `Theme` is a bundle of semantic colors. Build your own and use it like the
+built-ins:
+
+```python
+from interrobang import Theme, set_theme
+
+OCEAN = Theme(
+    name="Ocean",
+    background="#0b1e26", surface="#10303b", text="#bfe3ec",
+    primary="#1f9ed1", secondary="#4f9fa6", selection="#e0a458",
+    on_primary="#04141a", on_selection="#04141a",
+    bright="#e8f6fb", muted="#6f97a2", subtle="#9cc4cf", faint="#3a5a63",
+    gradient_start="#1f9ed1", gradient_end="#8fe3c3",
+)
+set_theme(OCEAN)
+```
+
+Themes color component *accents* — titles, selections, borders, progress bars,
+muted hints. Body text deliberately keeps the terminal's own foreground, so your
+app looks right whatever colors the user's terminal uses. The
+`background`/`surface`/`text` fields describe the intended terminal look (the
+docs screenshots use them); an app can also read them to paint its own backdrop.
+
+You can still override any component's styles directly — `theme` just sets the
+defaults:
+
+```python
+spinner = Spinner(DOTS)                       # themed accent
+spinner = Spinner(DOTS, Style().foreground(Color("#ff00ff")))  # explicit
+```
+
 ## Inheritance
 
 `.inherit(other)` fills in any *unset* text attributes, colors, and border from

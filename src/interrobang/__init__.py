@@ -70,6 +70,7 @@ from .model import Model
 from .mouse import MouseAction, MouseButton, MouseMsg
 from .program import Program, detect_dark_background, detect_profile, run
 from .style import Color, Style
+from .theme import CHARM, SOLARIZED_DARK, Theme, get_theme, set_theme
 
 __version__ = "0.1.0"
 
@@ -111,6 +112,12 @@ __all__ = [
     # styling (most-used; full set in interrobang.style)
     "Style",
     "Color",
+    # theming
+    "Theme",
+    "SOLARIZED_DARK",
+    "CHARM",
+    "set_theme",
+    "get_theme",
     # text utilities
     "string_width",
     "strip_ansi",

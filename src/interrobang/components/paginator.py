@@ -14,6 +14,8 @@ from __future__ import annotations
 from enum import Enum, auto
 
 from ..key import KeyMsg
+from ..style import Style
+from ..theme import get_theme
 
 __all__ = ["PaginatorType", "Paginator"]
 
@@ -35,6 +37,9 @@ class Paginator:
         self.type = PaginatorType.DOTS
         self.active_dot = "●"
         self.inactive_dot = "○"
+        theme = get_theme()
+        self.active_style = Style().foreground(theme.primary)
+        self.inactive_style = Style().foreground(theme.muted)
 
     def set_total_items(self, total: int) -> int:
         """Recompute :attr:`total_pages` for *total* items; returns the page count."""
@@ -88,7 +93,9 @@ class Paginator:
         if self.type is PaginatorType.ARABIC:
             return f"{self.page + 1}/{self.total_pages}"
         dots = [
-            self.active_dot if i == self.page else self.inactive_dot
+            self.active_style.render(self.active_dot)
+            if i == self.page
+            else self.inactive_style.render(self.inactive_dot)
             for i in range(self.total_pages)
         ]
         return " ".join(dots)

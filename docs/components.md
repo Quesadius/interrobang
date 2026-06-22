@@ -21,7 +21,10 @@ from interrobang.components import (
 )
 ```
 
-Every component has a runnable example in [`examples/`](../examples).
+Every component's default colors come from the active
+[theme](styling.md#theming) (Solarized Dark by default); set a different one with
+`irb.set_theme(...)`, or override any component's styles directly. Every
+component has a runnable example in [`examples/`](../examples).
 
 ---
 
