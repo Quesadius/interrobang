@@ -6,7 +6,9 @@ import threading
 from interrobang import KeyMsg, KeyType, WindowSizeMsg, quit, run
 from interrobang.command import (
     clear_screen,
+    disable_background_fill,
     disable_mouse,
+    enable_background_fill,
     enable_mouse,
     enter_alt_screen,
     exit_alt_screen,
@@ -79,6 +81,8 @@ class TestControlMessages:
             show_cursor(),
             enable_mouse(),
             disable_mouse(),
+            enable_background_fill(),
+            disable_background_fill(),
             clear_screen(),
             set_window_title("hi")(),
         ]
@@ -357,6 +361,20 @@ class TestFillBackground:
         program.quit()
         thread.join(timeout=3.0)
         assert "48;2;0;43;54" not in buf.getvalue()
+
+    def test_toggle_on_at_runtime(self, monkeypatch):
+        # Start unfilled; the enable_background_fill command turns it on live.
+        monkeypatch.setenv("COLORTERM", "truecolor")
+        buf = io.StringIO()
+        program = Program(
+            _Hi(), output=buf, headless=True, alt_screen=True,
+            fill_background=False, catch_interrupt=False,
+        )
+        thread, errors = _run_in_thread(program)
+        program.send(enable_background_fill())
+        program.quit()
+        thread.join(timeout=3.0)
+        assert "48;2;0;43;54" in buf.getvalue()
 
     def test_fill_follows_active_theme(self, monkeypatch):
         from interrobang import SOLARIZED_LIGHT, set_theme

@@ -270,6 +270,21 @@ accents. Every example supports it via `--fill`:
 python examples/dashboard.py --theme solarized-light --fill
 ```
 
+You can also toggle the fill at runtime by returning the
+`enable_background_fill` / `disable_background_fill` commands from `update` —
+handy for a "full-screen theme" key:
+
+```python
+def update(self, msg):
+    if isinstance(msg, KeyMsg) and msg.key == "f":
+        self.filled = not self.filled
+        return self, (enable_background_fill if self.filled else disable_background_fill)
+    ...
+```
+
+The `dashboard` example wires up both: `t` cycles the theme and `f` toggles the
+fill, live.
+
 A `Theme` is a bundle of semantic colors. Build your own and use it like the
 built-ins:
 

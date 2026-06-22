@@ -9,7 +9,18 @@ theme (Solarized Dark by default); try ``irb.set_theme(irb.CHARM)`` in ``main``.
 from dataclasses import dataclass
 
 import interrobang as irb
-from interrobang import KeyMsg, batch, get_theme, quit, tick
+from interrobang import (
+    SOLARIZED_DARK,
+    SOLARIZED_LIGHT,
+    KeyMsg,
+    batch,
+    disable_background_fill,
+    enable_background_fill,
+    get_theme,
+    quit,
+    set_theme,
+    tick,
+)
 from interrobang.components import DOTS, Item, List, Progress, Spinner
 from interrobang.style import ROUNDED, TOP, Style, join_horizontal, join_vertical
 
@@ -32,6 +43,7 @@ TASKS = [
 class Dashboard:
     def __init__(self):
         self.theme = get_theme()
+        self.fill = False
         self.spinner = Spinner(DOTS)  # themed accent by default
         self.progress = Progress(width=30)  # themed gradient by default
         self.list = List(TASKS, width=30, height=10)
@@ -44,8 +56,15 @@ class Dashboard:
 
     def update(self, msg):
         cmds = []
-        if isinstance(msg, KeyMsg) and msg.key in ("q", "ctrl+c", "esc"):
-            return self, quit
+        if isinstance(msg, KeyMsg):
+            if msg.key in ("q", "ctrl+c", "esc"):
+                return self, quit
+            if msg.key == "t":  # toggle theme (re-styles everything live)
+                set_theme(SOLARIZED_LIGHT if self.theme is SOLARIZED_DARK else SOLARIZED_DARK)
+                self.theme = get_theme()
+            elif msg.key == "f":  # toggle full-screen background fill
+                self.fill = not self.fill
+                cmds.append(enable_background_fill if self.fill else disable_background_fill)
         if isinstance(msg, FrameMsg):
             self.progress.incr_percent(0.012)
             if self.progress.percent >= 1.0:
@@ -78,7 +97,7 @@ class Dashboard:
             "  ",
             list_panel.render(self.list.view()),
         )
-        footer = Style().foreground(t.muted).render("↑/↓ move the list · q quit")
+        footer = Style().foreground(t.muted).render("↑/↓ move · t theme · f fill · q quit")
         return f"\n{header}\n\n{panels}\n\n{footer}"
 
 

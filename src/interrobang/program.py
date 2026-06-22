@@ -24,7 +24,9 @@ from .command import (
     BatchCmd,
     SequenceCmd,
     _ClearScreen,
+    _DisableBackgroundFill,
     _DisableMouse,
+    _EnableBackgroundFill,
     _EnableMouse,
     _EnterAltScreen,
     _ExitAltScreen,
@@ -240,6 +242,10 @@ class Program:
         elif kind is _DisableMouse:
             if self._manage_tty:
                 self._terminal.disable_mouse()
+        elif kind is _EnableBackgroundFill or kind is _DisableBackgroundFill:
+            self._fill_background = kind is _EnableBackgroundFill
+            self._renderer.reset()  # frame shape changes -> full repaint
+            self._render_view()
         elif kind is _ClearScreen:
             self._renderer.reset()
             if self._manage_tty:

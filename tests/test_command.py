@@ -4,7 +4,9 @@ from interrobang.command import (
     BatchCmd,
     SequenceCmd,
     _ClearScreen,
+    _DisableBackgroundFill,
     _DisableMouse,
+    _EnableBackgroundFill,
     _EnableMouse,
     _EnterAltScreen,
     _ExitAltScreen,
@@ -13,7 +15,9 @@ from interrobang.command import (
     _ShowCursor,
     batch,
     clear_screen,
+    disable_background_fill,
     disable_mouse,
+    enable_background_fill,
     enable_mouse,
     enter_alt_screen,
     every,
@@ -111,6 +115,12 @@ class TestControlCommands:
 
     def test_disable_mouse(self):
         assert isinstance(disable_mouse(), _DisableMouse)
+
+    def test_enable_background_fill(self):
+        assert isinstance(enable_background_fill(), _EnableBackgroundFill)
+
+    def test_disable_background_fill(self):
+        assert isinstance(disable_background_fill(), _DisableBackgroundFill)
 
     def test_clear_screen(self):
         assert isinstance(clear_screen(), _ClearScreen)

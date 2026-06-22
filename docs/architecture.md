@@ -169,6 +169,7 @@ Some commands tell the *terminal* to do something. They're returned from
 | `enter_alt_screen` / `exit_alt_screen` | switch screen buffers |
 | `hide_cursor` / `show_cursor` | cursor visibility |
 | `enable_mouse` / `disable_mouse` | mouse reporting |
+| `enable_background_fill` / `disable_background_fill` | toggle the theme background fill (alt screen) |
 | `clear_screen` | force a full repaint |
 | `set_window_title(title)` | set the terminal title |
 

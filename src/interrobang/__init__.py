@@ -46,7 +46,9 @@ from .command import (
     Command,
     batch,
     clear_screen,
+    disable_background_fill,
     disable_mouse,
+    enable_background_fill,
     enable_mouse,
     enter_alt_screen,
     every,
@@ -107,6 +109,8 @@ __all__ = [
     "show_cursor",
     "enable_mouse",
     "disable_mouse",
+    "enable_background_fill",
+    "disable_background_fill",
     "clear_screen",
     "set_window_title",
     # styling (most-used; full set in interrobang.style)

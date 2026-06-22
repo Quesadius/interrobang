@@ -39,6 +39,8 @@ __all__ = [
     "show_cursor",
     "enable_mouse",
     "disable_mouse",
+    "enable_background_fill",
+    "disable_background_fill",
     "clear_screen",
     "set_window_title",
     "BatchCmd",
@@ -172,6 +174,16 @@ class _DisableMouse:
 
 
 @dataclass(frozen=True)
+class _EnableBackgroundFill:
+    pass
+
+
+@dataclass(frozen=True)
+class _DisableBackgroundFill:
+    pass
+
+
+@dataclass(frozen=True)
 class _ClearScreen:
     pass
 
@@ -209,6 +221,20 @@ def enable_mouse() -> Msg:
 def disable_mouse() -> Msg:
     """A command that disables mouse reporting."""
     return _DisableMouse()
+
+
+def enable_background_fill() -> Msg:
+    """A command that paints the active theme's background across the screen.
+
+    Takes effect on the alternate screen. Pair with :func:`disable_background_fill`
+    to toggle a fully-themed backdrop at runtime.
+    """
+    return _EnableBackgroundFill()
+
+
+def disable_background_fill() -> Msg:
+    """A command that stops painting the theme background fill."""
+    return _DisableBackgroundFill()
 
 
 def clear_screen() -> Msg:
