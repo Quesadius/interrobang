@@ -3,6 +3,8 @@
 Welcome! These guides take you from your first app to a deep understanding of
 how interrobang works.
 
+![interrobang dashboard](images/hero.svg)
+
 - **[Tutorial](tutorial.md)** — build a complete app from scratch, step by step.
 - **[The Elm Architecture](architecture.md)** — models, messages, commands, and
   the event loop that ties them together.

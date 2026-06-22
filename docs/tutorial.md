@@ -5,6 +5,10 @@ the end you'll understand the three methods every app implements, how to react
 to keyboard input, how to manage state, and how to drop in a ready-made
 component.
 
+Here's the kind of thing you'll be making (the `counter` example):
+
+![A styled counter app](images/counter.svg)
+
 ## 1. Install
 
 ```bash

@@ -7,6 +7,10 @@
 
 **Build beautiful terminal user interfaces in Python.**
 
+<p align="center">
+  <img src="docs/images/hero.svg" alt="An interrobang dashboard: a spinner, a gradient progress bar, and a selectable list arranged in two bordered panels" width="640">
+</p>
+
 interrobang is a pure-Python toolkit for crafting TUIs, inspired by
 [Charm](https://charm.sh)'s wonderful Go libraries
 [Bubble Tea](https://github.com/charmbracelet/bubbletea) and
@@ -142,6 +146,20 @@ class Model:
     def view(self):
         return f"{self.spinner.view()} Loading..."
 ```
+
+## Gallery
+
+A few components, rendered from their real output (the spinner and progress bar
+animate when viewed in a browser):
+
+| | |
+| --- | --- |
+| ![Spinner](docs/images/spinner.svg) | ![Progress bar](docs/images/progress.svg) |
+| ![List](docs/images/list.svg) | ![Table](docs/images/table.svg) |
+| ![Text input](docs/images/textinput.svg) | ![Paginator](docs/images/paginator.svg) |
+| ![Viewport](docs/images/viewport.svg) | ![File picker](docs/images/filepicker.svg) |
+
+See the [styling gallery](docs/images/styling.svg) and [layout demo](docs/images/layout.svg) too.
 
 ## Examples
 

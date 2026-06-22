@@ -27,6 +27,8 @@ Every component has a runnable example in [`examples/`](../examples).
 
 ## Spinner
 
+![Spinner](images/spinner.svg)
+
 An animated activity indicator. Drive it by returning its `tick` command from
 `init` and again whenever you receive a `SpinnerTickMsg`.
 
@@ -53,6 +55,8 @@ argument to color it. Build your own with `SpinnerStyle(frames, fps)`.
 
 ## TextInput
 
+![Text input](images/textinput.svg)
+
 A single-line editable field with a cursor, horizontal scrolling, and echo
 modes.
 
@@ -77,6 +81,8 @@ backspace/delete, `ctrl+u` (delete to start), `ctrl+k` (delete to end),
 
 ## Progress
 
+![Progress bar](images/progress.svg)
+
 A horizontal progress bar, solid or gradient.
 
 ```python
@@ -99,6 +105,8 @@ with `show_percentage`. Customize `full_char`, `empty_char`, `percent_style`,
 
 ## Viewport
 
+![Viewport](images/viewport.svg)
+
 A fixed-size scrollable window over multi-line text.
 
 ```python
@@ -117,6 +125,8 @@ Methods: `scroll_up/down(n)`, `page_up/down()`, `half_page_up/down()`,
 ---
 
 ## List
+
+![List](images/list.svg)
 
 A scrollable, selectable, filterable list. Items can be the provided `Item`
 (a `title` and optional `description`) or any object exposing `title`/
@@ -138,6 +148,8 @@ confirm, esc to clear). Configure `show_description`, `show_status_bar`,
 ---
 
 ## Table
+
+![Table](images/table.svg)
 
 A scrollable grid with a header and row selection.
 
@@ -161,6 +173,8 @@ Cells are truncated/padded to each `Column.width`. Replace rows with
 
 ## Paginator
 
+![Paginator](images/paginator.svg)
+
 Pagination math plus a compact page indicator.
 
 ```python
@@ -179,6 +193,8 @@ Helpers: `next_page()`, `prev_page()`, `on_first_page`, `on_last_page`,
 ---
 
 ## KeyBinding & Help
+
+![Help](images/help.svg)
 
 Declarative key bindings with an auto-generated help view.
 
@@ -206,6 +222,8 @@ short and full views via `help.view(bindings)`.
 ---
 
 ## FilePicker
+
+![File picker](images/filepicker.svg)
 
 A filesystem browser for choosing a file (or directory).
 

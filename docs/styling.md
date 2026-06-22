@@ -22,6 +22,8 @@ print(box.render("Hello, there!"))
 Because styles are immutable, every setter returns a **new** style. Define a
 style once at module scope and reuse it everywhere — it's safe to share.
 
+![A gallery of text attributes, a color gradient, a badge, and rounded/thick/double borders](images/styling.svg)
+
 ## Text attributes
 
 | Setter | Effect |
@@ -178,6 +180,8 @@ join_vertical(CENTER, "small", "a wider line", "mid")
 # Center content inside a fixed box (e.g. the whole screen):
 place(width, height, CENTER, CENTER, content)
 ```
+
+![Three bordered cards joined horizontally with join_horizontal](images/layout.svg)
 
 Other helpers: `align_horizontal`, `align_vertical`, `place_horizontal`,
 `place_vertical`, and `pad_right`.
