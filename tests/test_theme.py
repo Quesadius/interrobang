@@ -60,7 +60,7 @@ def test_list_title_recolors_with_charm():
 
 def test_spinner_uses_theme_selection():
     out = Spinner(DOTS).view()
-    assert "38;2;211;54;130" in out  # solarized magenta
+    assert "38;2;203;75;22" in out  # solarized orange
 
 
 def test_custom_theme():

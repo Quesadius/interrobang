@@ -138,8 +138,8 @@ A scrollable, selectable, filterable list. Items can be the provided `Item`
 ```python
 from interrobang.components import List, Item
 
-lst = List([Item("Pocky", "snack"), Item("Ramen", "soup")], width=40, height=14)
-lst.title = "Snacks"
+lst = List([Item("Interrobang", "asks and exclaims"), Item("Ellipsis", "trails off")], width=40, height=14)
+lst.title = "Punctuation"
 lst, cmd = lst.update(msg)
 chosen = lst.selected_item()
 ```
@@ -160,8 +160,8 @@ A scrollable grid with a header and row selection.
 from interrobang.components import Table, Column
 
 table = Table(
-    columns=[Column("Name", 16), Column("Language", 10), Column("Stars", 6)],
-    rows=[["bubbletea", "Go", "29k"], ["interrobang", "Python", "1"]],
+    columns=[Column("Mark", 5), Column("Name", 18), Column("Unicode", 9)],
+    rows=[["‽", "Interrobang", "U+203D"], ["!", "Exclamation point", "U+0021"]],
     height=10,
 )
 table, cmd = table.update(msg)   # up/down (j/k), home/end (g/G)

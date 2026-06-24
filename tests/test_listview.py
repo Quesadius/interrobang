@@ -6,9 +6,9 @@ from interrobang.testing import strip_ansi
 
 
 def make():
-    items = [Item("Pocky", "snack"), Item("Ramen", "soup"), Item("Mochi", "dessert")]
+    items = [Item("Question", "asks"), Item("Exclaim", "shouts"), Item("Interrobang", "both")]
     lst = List(items, width=30, height=14)
-    lst.title = "Snacks"
+    lst.title = "Punctuation"
     return lst
 
 
@@ -20,7 +20,7 @@ class TestNavigation:
     def test_down(self):
         lst = press(make(), KeyType.DOWN)
         assert lst.cursor == 1
-        assert lst.selected_item().title == "Ramen"
+        assert lst.selected_item().title == "Exclaim"
 
     def test_up_clamps(self):
         lst = press(make(), KeyType.UP)
@@ -46,7 +46,7 @@ class TestNavigation:
 
 class TestSelection:
     def test_selected_item(self):
-        assert make().selected_item().title == "Pocky"
+        assert make().selected_item().title == "Question"
 
     def test_empty_list(self):
         assert List([]).selected_item() is None
@@ -57,22 +57,22 @@ class TestFiltering:
         lst = make()
         lst = press(lst, KeyType.RUNES, "/")
         assert lst.filtering
-        for ch in "mo":
+        for ch in "int":
             lst = press(lst, KeyType.RUNES, ch)
-        assert [i.title for i in lst.visible_items()] == ["Mochi"]
+        assert [i.title for i in lst.visible_items()] == ["Interrobang"]
 
     def test_filter_enter_confirms(self):
         lst = make()
         lst = press(lst, KeyType.RUNES, "/")
-        lst = press(lst, KeyType.RUNES, "r")
+        lst = press(lst, KeyType.RUNES, "q")
         lst = press(lst, KeyType.ENTER)
         assert not lst.filtering
-        assert lst.filter_text == "r"
+        assert lst.filter_text == "q"
 
     def test_filter_esc_clears(self):
         lst = make()
         lst = press(lst, KeyType.RUNES, "/")
-        lst = press(lst, KeyType.RUNES, "r")
+        lst = press(lst, KeyType.RUNES, "q")
         lst = press(lst, KeyType.ESC)
         assert not lst.filtering
         assert lst.filter_text == ""
@@ -96,12 +96,12 @@ class TestData:
 
 class TestView:
     def test_shows_title(self):
-        assert "Snacks" in strip_ansi(make().view())
+        assert "Punctuation" in strip_ansi(make().view())
 
     def test_shows_items(self):
         view = strip_ansi(make().view())
-        assert "Pocky" in view
-        assert "Ramen" in view
+        assert "Question" in view
+        assert "Exclaim" in view
 
     def test_status_bar(self):
         view = strip_ansi(make().view())
@@ -115,4 +115,4 @@ class TestView:
         lst = make()
         lst.show_description = False
         view = strip_ansi(lst.view())
-        assert "snack" not in view
+        assert "asks" not in view

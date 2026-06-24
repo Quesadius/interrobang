@@ -72,22 +72,22 @@ from termshot import render_animated_svg, render_svg  # noqa: E402
 
 IMAGES_DIR = os.path.join(ROOT, "docs", "images")
 
-SNACKS = [
-    Item("Pocky", "Biscuit sticks dipped in chocolate"),
-    Item("Ramen", "Wheat noodles in savory broth"),
-    Item("Mochi", "Chewy rice cake, often filled"),
-    Item("Taiyaki", "Fish-shaped cake with sweet filling"),
-    Item("Dango", "Skewered rice dumplings"),
-    Item("Senbei", "Crunchy rice crackers"),
+MARKS = [
+    Item("Interrobang", "‽  asks and exclaims at once"),
+    Item("Exclamation point", "!  emphatic and eager"),
+    Item("Question mark", "?  curious and uncertain"),
+    Item("Em dash", "—  an abrupt aside"),
+    Item("Ellipsis", "…  a trailing off"),
+    Item("Semicolon", ";  joins two related clauses"),
 ]
 
 TABLE_ROWS = [
-    ["bubbletea", "Go", "Charm", "29k"],
-    ["lipgloss", "Go", "Charm", "9k"],
-    ["rich", "Python", "Textualize", "49k"],
-    ["textual", "Python", "Textualize", "27k"],
-    ["interrobang", "Python", "you", "1"],
-    ["ratatui", "Rust", "ratatui-org", "11k"],
+    ["‽", "Interrobang", "U+203D", "1962"],
+    ["!", "Exclamation point", "U+0021", "1400s"],
+    ["?", "Question mark", "U+003F", "1500s"],
+    ["—", "Em dash", "U+2014", "—"],
+    ["…", "Ellipsis", "U+2026", "—"],
+    ["&", "Ampersand", "U+0026", "~50 BC"],
 ]
 
 
@@ -174,7 +174,7 @@ def layout() -> str:
 
 def spinner_frames() -> list[str]:
     sp = Spinner(DOTS)
-    label = Style().foreground(T.muted).render(" Brewing your interface...")
+    label = Style().foreground(T.muted).render(" Asking the important questions ‽")
     frames = []
     for i in range(len(DOTS.frames)):
         sp.frame = i
@@ -209,20 +209,20 @@ def viewport() -> str:
 
 
 def listview() -> str:
-    lst = List(SNACKS, width=44, height=14)
-    lst.title = "Snacks"
+    lst = List(MARKS, width=44, height=14)
+    lst.title = "Punctuation"
     lst.cursor = 2
     return lst.view()
 
 
 def table() -> str:
     t = Table(
-        columns=[Column("Library", 16), Column("Language", 10), Column("Author", 16), Column("Stars", 6)],
+        columns=[Column("Mark", 5), Column("Name", 18), Column("Unicode", 9), Column("Coined", 8)],
         rows=TABLE_ROWS,
         height=10,
     )
-    t.cursor = 4
-    title = Style().bold().foreground(T.primary).render("TUI libraries")
+    t.cursor = 0
+    title = Style().bold().foreground(T.primary).render("Punctuation marks")
     return title + "\n\n" + t.view()
 
 

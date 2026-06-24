@@ -3,8 +3,8 @@
 Define columns, set rows, and forward messages for up/down navigation::
 
     table = Table(
-        columns=[Column("Name", 20), Column("Language", 12), Column("Stars", 8)],
-        rows=[["bubbletea", "Go", "25k"], ["interrobang", "Python", "1"]],
+        columns=[Column("Mark", 5), Column("Name", 18), Column("Unicode", 9)],
+        rows=[["‽", "Interrobang", "U+203D"], ["!", "Exclamation point", "U+0021"]],
         height=10,
     )
     table, cmd = table.update(msg)

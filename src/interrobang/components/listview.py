@@ -4,9 +4,9 @@ Feed it items (any object exposing ``title`` and ``description``, or use the
 provided :class:`Item`), and it handles cursor movement, paging, and an
 optional fuzzy-ish substring filter you toggle with ``/``::
 
-    items = [Item("Pocky", "Japanese snack"), Item("Ramen", "Noodle soup")]
+    items = [Item("Interrobang", "asks and exclaims"), Item("Ellipsis", "a trailing off")]
     lst = List(items, width=40, height=12)
-    lst.title = "Snacks"
+    lst.title = "Punctuation"
     ...
     lst, cmd = lst.update(msg)
     print(lst.view())

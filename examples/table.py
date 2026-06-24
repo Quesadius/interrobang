@@ -1,21 +1,21 @@
 """A scrollable table with row selection. Run: python examples/table.py."""
 
 import interrobang as irb
-from interrobang import KeyMsg, quit
+from interrobang import KeyMsg, get_theme, quit
 from interrobang.components import Column, Table
-from interrobang.style import Color, Style
+from interrobang.style import Style
 
 ROWS = [
-    ["bubbletea", "Go", "Charm", "29k"],
-    ["lipgloss", "Go", "Charm", "9k"],
-    ["rich", "Python", "Textualize", "49k"],
-    ["textual", "Python", "Textualize", "27k"],
-    ["interrobang", "Python", "you", "1"],
-    ["blessed", "Python", "jquast", "3k"],
-    ["urwid", "Python", "urwid", "3k"],
-    ["prompt_toolkit", "Python", "jonathanslenders", "9k"],
-    ["ratatui", "Rust", "ratatui-org", "11k"],
-    ["ink", "JS", "vadimdemedes", "27k"],
+    ["‽", "Interrobang", "U+203D", "1962"],
+    ["!", "Exclamation point", "U+0021", "1400s"],
+    ["?", "Question mark", "U+003F", "1500s"],
+    ["—", "Em dash", "U+2014", "—"],
+    ["…", "Ellipsis", "U+2026", "—"],
+    ["&", "Ampersand", "U+0026", "~50 BC"],
+    [";", "Semicolon", "U+003B", "1494"],
+    [":", "Colon", "U+003A", "1500s"],
+    ["¶", "Pilcrow", "U+00B6", "1100s"],
+    ["*", "Asterisk", "U+002A", "~200 BC"],
 ]
 
 
@@ -23,10 +23,10 @@ class Model:
     def __init__(self):
         self.table = Table(
             columns=[
-                Column("Library", 16),
-                Column("Language", 10),
-                Column("Author", 18),
-                Column("Stars", 6),
+                Column("Mark", 5),
+                Column("Name", 18),
+                Column("Unicode", 9),
+                Column("Coined", 8),
             ],
             rows=ROWS,
             height=12,
@@ -42,9 +42,9 @@ class Model:
         return self, cmd
 
     def view(self):
-        title = Style().bold().foreground(Color("#7D56F4")).render("TUI libraries")
+        title = Style().bold().foreground(get_theme().primary).render("Punctuation marks")
         row = self.table.selected_row()
-        selected = Style().faint().render(f"selected: {row[0] if row else '-'}")
+        selected = Style().faint().render(f"selected: {row[1] if row else '-'}")
         hint = Style().faint().render("↑/↓ move · q quit")
         return f"\n{title}\n\n{self.table.view()}\n\n{selected}\n{hint}\n"
 

@@ -19,7 +19,7 @@ def panel():
     spinner = Spinner(DOTS)
     spinner.frame = 2
     bar = Progress(width=24)
-    items = List([Item("Alpha"), Item("Beta"), Item("Gamma")], width=24, height=8)
+    items = List([Item("Exclaim"), Item("Question"), Item("Interrobang")], width=24, height=8)
     items.show_description = False
     items.show_status_bar = False
     items.cursor = 1

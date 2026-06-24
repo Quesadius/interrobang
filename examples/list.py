@@ -6,26 +6,26 @@ Move with ↑/↓ (or j/k), filter with /, select with enter, q to quit.
 import interrobang as irb
 from interrobang import KeyMsg, quit
 from interrobang.components import Item, List
-from interrobang.style import Color, Style
+from interrobang.style import Style
 
-SNACKS = [
-    Item("Pocky", "Biscuit sticks dipped in chocolate"),
-    Item("Ramen", "Wheat noodles in savory broth"),
-    Item("Mochi", "Chewy rice cake, often filled"),
-    Item("Taiyaki", "Fish-shaped cake with sweet filling"),
-    Item("Dango", "Skewered rice dumplings"),
-    Item("Senbei", "Crunchy rice crackers"),
-    Item("Matcha KitKat", "Green tea chocolate wafer"),
-    Item("Onigiri", "Rice ball wrapped in nori"),
-    Item("Dorayaki", "Pancakes with red bean paste"),
-    Item("Melonpan", "Sweet bun with a crisp crust"),
+MARKS = [
+    Item("Interrobang", "‽  asks and exclaims at once"),
+    Item("Exclamation point", "!  emphatic and eager"),
+    Item("Question mark", "?  curious and uncertain"),
+    Item("Em dash", "—  an abrupt aside"),
+    Item("Ellipsis", "…  a trailing off"),
+    Item("Semicolon", ";  joins two related clauses"),
+    Item("Ampersand", "&  the ligature of “et”"),
+    Item("Octothorpe", "#  hash, pound, sharp"),
+    Item("Pilcrow", "¶  marks a new paragraph"),
+    Item("Asterisk", "*  a footnote’s little star"),
 ]
 
 
 class Model:
     def __init__(self):
-        self.list = List(SNACKS, width=44, height=16)
-        self.list.title = "Snacks"
+        self.list = List(MARKS, width=44, height=16)
+        self.list.title = "Punctuation"
         self.chosen = None
 
     def init(self):

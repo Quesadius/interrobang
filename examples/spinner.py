@@ -21,7 +21,7 @@ class Model:
 
     def view(self):
         return (
-            f"\n  {self.spinner.view()} Brewing your interface...\n\n"
+            f"\n  {self.spinner.view()} Asking the important questions ‽\n\n"
             f"  {Style().faint().render('q quit')}\n"
         )
 
