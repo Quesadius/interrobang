@@ -1,7 +1,7 @@
 # Components reference
 
-Components are interrobang's ready-made widgets — the Bubbles analog. Each is a
-small self-contained model with its own `update` and `view`, plus configuration
+Components are interrobang's ready-made widgets. Each is a small self-contained
+model with its own `update` and `view`, plus configuration
 attributes and helper methods. You embed one (or several) in your application
 model, forward messages to it, and place its `view()` output wherever you like.
 

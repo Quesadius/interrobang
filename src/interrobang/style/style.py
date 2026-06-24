@@ -18,7 +18,7 @@ to turn text into an ANSI-decorated string::
     print(box.render("Hello, there!"))
 
 Because styles are immutable, they are safe to define once at module scope and
-reuse everywhere -- the way Lip Gloss styles work in Go.
+reuse everywhere.
 """
 
 from __future__ import annotations
@@ -298,8 +298,8 @@ class Style:
     def inherit(self, other: "Style") -> "Style":
         """Return a copy that takes unset text attributes/colors/border from *other*.
 
-        Sizing, padding, and margins are intentionally not inherited (matching
-        Lip Gloss): those describe a specific layout, not a reusable look.
+        Sizing, padding, and margins are intentionally not inherited: those
+        describe a specific layout, not a reusable look.
         """
         base = Style()
         changes: dict = {}

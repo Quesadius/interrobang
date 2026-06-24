@@ -3,8 +3,8 @@
 interrobang understands four terminal color profiles and *degrades* colors
 gracefully between them: a 24-bit truecolor will be approximated by the nearest
 256-color, then by the nearest of the 16 base colors, and finally dropped
-entirely on a monochrome terminal. This mirrors the way Charm's Lip Gloss keeps
-the same source code looking right everywhere.
+entirely on a monochrome terminal, so the same source code looks right
+everywhere.
 
 Color objects are immutable and pure. Resolving a color to an escape sequence
 requires a :class:`Profile` (how many colors the terminal supports) and a

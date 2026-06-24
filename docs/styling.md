@@ -1,7 +1,8 @@
 # Styling guide
 
-interrobang's styling engine is its Lip Gloss analog. The centerpiece is
-`Style`: an immutable, chainable description of how text should look and lay out.
+interrobang's styling engine gives you color, layout, and borders. The
+centerpiece is `Style`: an immutable, chainable description of how text should
+look and lay out.
 You build a style with fluent setters and call `.render()` to turn text into an
 ANSI-decorated string.
 
@@ -230,18 +231,18 @@ s.get_width(), s.get_height(), s.get_padding()
 
 Components don't hardcode their colors — they read them from the **active
 theme**. interrobang ships three: `SOLARIZED_DARK` (the default),
-`SOLARIZED_LIGHT`, and `CHARM`.
+`SOLARIZED_LIGHT`, and `NEON`.
 
-| Solarized Dark | Solarized Light | Charm |
+| Solarized Dark | Solarized Light | Neon |
 | --- | --- | --- |
-| ![Solarized Dark](images/theme-solarized-dark.svg) | ![Solarized Light](images/theme-solarized-light.svg) | ![Charm](images/theme-charm.svg) |
+| ![Solarized Dark](images/theme-solarized-dark.svg) | ![Solarized Light](images/theme-solarized-light.svg) | ![Neon](images/theme-neon.svg) |
 
 Switch the whole app's look in one call:
 
 ```python
 import interrobang as irb
 
-irb.set_theme(irb.SOLARIZED_LIGHT)   # SOLARIZED_DARK (default) | SOLARIZED_LIGHT | CHARM
+irb.set_theme(irb.SOLARIZED_LIGHT)   # SOLARIZED_DARK (default) | SOLARIZED_LIGHT | NEON
 ```
 
 `set_theme` also **re-styles components that already exist** — call it any time

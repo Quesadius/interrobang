@@ -1,4 +1,4 @@
-"""Ready-made widgets -- interrobang's answer to Charm's Bubbles.
+"""Ready-made widgets.
 
 Each component is a small self-contained model: it has its own ``update`` and
 ``view``, plus configuration attributes and helper methods. You embed one (or

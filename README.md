@@ -11,11 +11,7 @@
   <img src="docs/images/hero.svg" alt="An interrobang dashboard: a spinner, a gradient progress bar, and a selectable list arranged in two bordered panels" width="640">
 </p>
 
-interrobang is a pure-Python toolkit for crafting TUIs, inspired by
-[Charm](https://charm.sh)'s wonderful Go libraries
-[Bubble Tea](https://github.com/charmbracelet/bubbletea) and
-[Lip Gloss](https://github.com/charmbracelet/lipgloss). It gives you the same
-two ideas, made Pythonic:
+interrobang is a pure-Python toolkit for crafting TUIs, built around two ideas:
 
 - a tiny **runtime** built on **The Elm Architecture** — your app is a *model*,
   an *update* function, and a *view* function, and that's it; and
@@ -88,7 +84,7 @@ results = irb.testing.feed(Counter(), [KeyMsg(KeyType.UP), KeyMsg(KeyType.UP)])
 assert results[-1].model.count == 2
 ```
 
-## Styling with Lip Gloss flair
+## Styling
 
 `Style` objects are immutable and chainable. Build one once, reuse it forever.
 
@@ -116,9 +112,8 @@ different colors for light and dark backgrounds.
 
 ## Batteries-included components
 
-interrobang ships a broad set of ready-made widgets (the
-[Bubbles](https://github.com/charmbracelet/bubbles) analog). Each is a small
-model with its own `update`/`view` that you embed in your app:
+interrobang ships a broad set of ready-made widgets. Each is a small model with
+its own `update`/`view` that you embed in your app:
 
 | Component | What it is |
 | --- | --- |
@@ -164,12 +159,12 @@ See the [styling gallery](docs/images/styling.svg) and [layout demo](docs/images
 ## Theming
 
 Components read their colors from the **active theme**. interrobang ships three
-— `SOLARIZED_DARK` (the default), `SOLARIZED_LIGHT`, and `CHARM` — or define your
+— `SOLARIZED_DARK` (the default), `SOLARIZED_LIGHT`, and `NEON` — or define your
 own `Theme`:
 
-| Solarized Dark | Solarized Light | Charm |
+| Solarized Dark | Solarized Light | Neon |
 | --- | --- | --- |
-| ![Solarized Dark](docs/images/theme-solarized-dark.svg) | ![Solarized Light](docs/images/theme-solarized-light.svg) | ![Charm](docs/images/theme-charm.svg) |
+| ![Solarized Dark](docs/images/theme-solarized-dark.svg) | ![Solarized Light](docs/images/theme-solarized-light.svg) | ![Neon](docs/images/theme-neon.svg) |
 
 ```python
 import interrobang as irb
@@ -196,7 +191,7 @@ run any of them with `python examples/<name>.py`:
 - `dashboard.py` — a larger app composing several components
 - `themes.py` — the built-in themes side by side
 
-Pass `--theme solarized-light` (or `solarized-dark` / `charm`) to any interactive
+Pass `--theme solarized-light` (or `solarized-dark` / `neon`) to any interactive
 example, e.g. `python examples/dashboard.py --theme solarized-light`.
 
 ## Documentation
@@ -239,8 +234,3 @@ pytest --cov=interrobang    # with coverage
 ## License
 
 MIT. See [LICENSE](LICENSE).
-
----
-
-Inspired with admiration by the folks at [Charm](https://charm.sh). interrobang
-is an independent project and is not affiliated with Charm.

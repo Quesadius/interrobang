@@ -57,13 +57,13 @@ def test_example_runs(filename):
 
 
 def test_theme_flag_helper():
-    from interrobang import CHARM, SOLARIZED_DARK, SOLARIZED_LIGHT, get_theme, set_theme
+    from interrobang import NEON, SOLARIZED_DARK, SOLARIZED_LIGHT, get_theme, set_theme
 
     shared = load_example("_shared.py")
     try:
         assert shared.apply_theme_flag([]) is None
-        assert shared.apply_theme_flag(["--theme", "charm"]) is CHARM
-        assert get_theme() is CHARM
+        assert shared.apply_theme_flag(["--theme", "neon"]) is NEON
+        assert get_theme() is NEON
         assert shared.apply_theme_flag(["--theme=solarized-light"]) is SOLARIZED_LIGHT
         assert get_theme() is SOLARIZED_LIGHT
         assert shared.wants_fill(["--fill"]) is True

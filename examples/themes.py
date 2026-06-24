@@ -5,7 +5,7 @@ Switching the whole app's look is a single call: ``irb.set_theme(theme)`` before
 you build your components.
 """
 
-from interrobang import CHARM, SOLARIZED_DARK, get_theme, set_theme
+from interrobang import NEON, SOLARIZED_DARK, get_theme, set_theme
 from interrobang.components import DOTS, Item, List, Progress, Spinner
 from interrobang.style import ROUNDED, Style, join_vertical
 
@@ -37,7 +37,7 @@ def panel():
 
 
 def main():
-    for theme in (SOLARIZED_DARK, CHARM):
+    for theme in (SOLARIZED_DARK, NEON):
         set_theme(theme)
         print()
         print(panel())

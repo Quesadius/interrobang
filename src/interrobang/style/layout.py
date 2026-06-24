@@ -3,7 +3,7 @@
 These functions operate on plain (possibly already-styled) strings and are
 ANSI-aware: they measure visible width while leaving escape sequences intact.
 They are the composition glue you use to arrange rendered blocks next to and on
-top of one another, the same role Lip Gloss's ``JoinHorizontal``/``Place`` play.
+top of one another (``join_horizontal``, ``join_vertical``, ``place``).
 
 Positions are floats in ``[0, 1]``: ``0.0`` is left/top, ``0.5`` is center,
 ``1.0`` is right/bottom. The named constants below cover the common cases.

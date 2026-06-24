@@ -1,4 +1,4 @@
-"""interrobang's styling engine -- the Lip Gloss analog.
+"""interrobang's styling engine.
 
 Import the pieces you need from here::
 

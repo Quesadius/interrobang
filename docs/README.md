@@ -9,7 +9,7 @@ how interrobang works.
 - **[The Elm Architecture](architecture.md)** — models, messages, commands, and
   the event loop that ties them together.
 - **[Styling guide](styling.md)** — colors, borders, padding, alignment, and the
-  layout helpers (the Lip Gloss side of interrobang).
+  layout helpers.
 - **[Components reference](components.md)** — every ready-made widget, with API
   and examples.
 - **[Testing guide](testing.md)** — how to verify your app without a terminal.
@@ -17,15 +17,14 @@ how interrobang works.
 If you prefer to learn by reading code, the [`examples/`](../examples) directory
 has a runnable program for every feature.
 
-## A note on terminology
+## The shape of an app
 
-interrobang borrows its vocabulary from [Charm](https://charm.sh)'s Go libraries:
+interrobang has three parts, and the docs map onto them:
 
-| interrobang | Charm equivalent | What it is |
+| Part | What it is | Guide |
 | --- | --- | --- |
-| the runtime (`Program`, model/update/view) | Bubble Tea | the event loop and app structure |
-| the styling engine (`Style`, colors, borders) | Lip Gloss | text styling and layout |
-| components (`Spinner`, `List`, ...) | Bubbles | ready-made widgets |
+| the runtime (`Program`, model/update/view) | the event loop and app structure | [architecture](architecture.md) |
+| the styling engine (`Style`, colors, borders) | text styling and layout | [styling](styling.md) |
+| components (`Spinner`, `List`, ...) | ready-made widgets | [components](components.md) |
 
-If you know those libraries, you'll feel at home. If you don't, you don't need
-to — these guides assume no prior knowledge.
+The guides assume no prior knowledge — start with the [tutorial](tutorial.md).

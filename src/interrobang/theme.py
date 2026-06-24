@@ -6,11 +6,12 @@ when constructed and colour their default styles accordingly, so switching the
 whole app's look is one call::
 
     import interrobang as irb
-    irb.set_theme(irb.CHARM)        # or irb.SOLARIZED_DARK (the default)
+    irb.set_theme(irb.NEON)         # or irb.SOLARIZED_DARK (the default)
 
-interrobang ships two themes: :data:`SOLARIZED_DARK` (the default) and
-:data:`CHARM`. Build your own by constructing a :class:`Theme` -- every field is
-a color string (hex like ``"#268bd2"`` or a palette index like ``"5"``).
+interrobang ships three themes: :data:`SOLARIZED_DARK` (the default),
+:data:`SOLARIZED_LIGHT`, and :data:`NEON`. Build your own by constructing a
+:class:`Theme` -- every field is a color string (hex like ``"#268bd2"`` or a
+palette index like ``"5"``).
 
 Themes affect component *accents* (titles, selections, borders, progress, hints)
 -- body text keeps using the terminal's own foreground so apps look right
@@ -28,7 +29,7 @@ __all__ = [
     "Theme",
     "SOLARIZED_DARK",
     "SOLARIZED_LIGHT",
-    "CHARM",
+    "NEON",
     "set_theme",
     "get_theme",
     "register_themed",
@@ -96,9 +97,9 @@ SOLARIZED_LIGHT = Theme(
     gradient_end="#859900",  # green
 )
 
-#: The look interrobang shipped with originally, inspired by Charm's palette.
-CHARM = Theme(
-    name="Charm",
+#: A vibrant, high-contrast theme: violet and pink on near-black.
+NEON = Theme(
+    name="Neon",
     background="#16161e",
     surface="#22232f",
     text="#c0caf5",

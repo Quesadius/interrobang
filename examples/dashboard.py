@@ -3,7 +3,7 @@
 Shows a spinner, an animated progress bar, and a navigable list side by side --
 the kind of layout you build by giving each component its own ``update``/``view``
 and arranging the results with the layout helpers. Colors come from the active
-theme (Solarized Dark by default); try ``irb.set_theme(irb.CHARM)`` in ``main``.
+theme (Solarized Dark by default); try ``irb.set_theme(irb.NEON)`` in ``main``.
 """
 
 from dataclasses import dataclass

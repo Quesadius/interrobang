@@ -5,12 +5,12 @@ build-backend = "hatchling.build"
 [project]
 name = "interrobang"
 version = "0.1.0"
-description = "Build beautiful terminal user interfaces in Python. A pure-stdlib toolkit inspired by Charm's Bubble Tea and Lip Gloss."
+description = "Build beautiful terminal user interfaces in Python. A pure-stdlib toolkit with an Elm-style runtime and a fluent styling engine."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [{ name = "interrobang contributors" }]
-keywords = ["tui", "terminal", "cli", "ansi", "bubbletea", "lipgloss", "elm"]
+keywords = ["tui", "terminal", "cli", "ansi", "elm", "curses", "styling"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Environment :: Console",

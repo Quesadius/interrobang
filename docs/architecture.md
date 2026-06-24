@@ -1,8 +1,8 @@
 # The Elm Architecture
 
 interrobang's runtime is a faithful, Pythonic take on **The Elm Architecture**
-(TEA), the same pattern that powers Charm's Bubble Tea. Once it clicks, building
-TUIs becomes almost mechanical. This guide explains every piece.
+(TEA) — model, update, view. Once it clicks, building TUIs becomes almost
+mechanical. This guide explains every piece.
 
 ## The big picture
 

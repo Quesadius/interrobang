@@ -7,8 +7,8 @@ from interrobang.testing import strip_ansi
 
 def make():
     return Table(
-        columns=[Column("Name", 12), Column("Lang", 8)],
-        rows=[["bubbletea", "Go"], ["interrobang", "Python"], ["rich", "Python"]],
+        columns=[Column("Name", 14), Column("Mark", 6)],
+        rows=[["Interrobang", "‽"], ["Exclaim", "!"], ["Question", "?"]],
         height=8,
     )
 
@@ -21,7 +21,7 @@ class TestNavigation:
     def test_down(self):
         t = press(make(), KeyType.DOWN)
         assert t.cursor == 1
-        assert t.selected_row() == ["interrobang", "Python"]
+        assert t.selected_row() == ["Exclaim", "!"]
 
     def test_up_clamps(self):
         assert press(make(), KeyType.UP).cursor == 0
@@ -48,7 +48,7 @@ class TestNavigation:
 
 class TestSelection:
     def test_selected_row(self):
-        assert make().selected_row() == ["bubbletea", "Go"]
+        assert make().selected_row() == ["Interrobang", "‽"]
 
     def test_empty(self):
         assert Table(columns=[Column("A", 4)], rows=[]).selected_row() is None
@@ -58,13 +58,13 @@ class TestView:
     def test_header_and_underline(self):
         lines = strip_ansi(make().view()).split("\n")
         assert "Name" in lines[0]
-        assert "Lang" in lines[0]
+        assert "Mark" in lines[0]
         assert set(lines[1]) == {"─"}
 
     def test_rows_present(self):
         view = strip_ansi(make().view())
-        assert "bubbletea" in view
-        assert "interrobang" in view
+        assert "Interrobang" in view
+        assert "Question" in view
 
     def test_truncates_long_cells(self):
         t = Table(columns=[Column("X", 4)], rows=[["abcdefgh"]], height=5)

@@ -1,6 +1,6 @@
 """interrobang -- build beautiful terminal UIs in Python. ‽
 
-interrobang gives you two things, mirroring Charm's Bubble Tea and Lip Gloss:
+interrobang gives you two things:
 
 * a tiny **runtime** built on the Elm Architecture (model / update / view), and
 * a **styling engine** for color, layout, and borders.
@@ -72,7 +72,7 @@ from .model import Model
 from .mouse import MouseAction, MouseButton, MouseMsg
 from .program import Program, detect_dark_background, detect_profile, run
 from .style import Color, Style
-from .theme import CHARM, SOLARIZED_DARK, SOLARIZED_LIGHT, Theme, get_theme, set_theme
+from .theme import NEON, SOLARIZED_DARK, SOLARIZED_LIGHT, Theme, get_theme, set_theme
 
 __version__ = "0.1.0"
 
@@ -120,7 +120,7 @@ __all__ = [
     "Theme",
     "SOLARIZED_DARK",
     "SOLARIZED_LIGHT",
-    "CHARM",
+    "NEON",
     "set_theme",
     "get_theme",
     # text utilities

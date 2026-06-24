@@ -5,7 +5,7 @@ import dataclasses
 import pytest
 
 from interrobang import (
-    CHARM,
+    NEON,
     SOLARIZED_DARK,
     SOLARIZED_LIGHT,
     Color,
@@ -23,8 +23,8 @@ def test_default_theme_is_solarized():
 
 
 def test_set_and_get_theme():
-    set_theme(CHARM)
-    assert get_theme() is CHARM
+    set_theme(NEON)
+    assert get_theme() is NEON
     set_theme(SOLARIZED_DARK)
     assert get_theme() is SOLARIZED_DARK
 
@@ -39,10 +39,10 @@ def test_progress_gradient_follows_solarized():
     assert "38;2;38;139;210" in out  # solarized blue (gradient start)
 
 
-def test_progress_gradient_follows_charm():
-    set_theme(CHARM)
+def test_progress_gradient_follows_neon():
+    set_theme(NEON)
     out = Progress(width=20).view_as(1.0)
-    assert "38;2;255;124;203" in out  # charm pink (gradient start)
+    assert "38;2;255;124;203" in out  # neon pink (gradient start)
 
 
 def test_list_title_uses_theme_primary():
@@ -51,11 +51,11 @@ def test_list_title_uses_theme_primary():
     assert "48;2;38;139;210" in lst.view()  # solarized blue background
 
 
-def test_list_title_recolors_with_charm():
-    set_theme(CHARM)
+def test_list_title_recolors_with_neon():
+    set_theme(NEON)
     lst = List([Item("a")], width=20, height=6)
     lst.title = "X"
-    assert "48;2;125;86;244" in lst.view()  # charm purple background
+    assert "48;2;125;86;244" in lst.view()  # neon purple background
 
 
 def test_spinner_uses_theme_selection():
@@ -88,7 +88,7 @@ def test_custom_theme():
 def test_themes_have_distinct_names():
     assert SOLARIZED_DARK.name == "Solarized Dark"
     assert SOLARIZED_LIGHT.name == "Solarized Light"
-    assert CHARM.name == "Charm"
+    assert NEON.name == "Neon"
 
 
 def test_solarized_light_uses_light_background():
@@ -103,19 +103,19 @@ def test_set_theme_restyles_existing_component():
     lst = List([Item("a")], width=20, height=6)
     lst.title = "X"
     assert "48;2;38;139;210" in lst.view()  # solarized blue
-    set_theme(CHARM)
-    assert "48;2;125;86;244" in lst.view()  # the SAME instance is now charm purple
+    set_theme(NEON)
+    assert "48;2;125;86;244" in lst.view()  # the SAME instance is now neon purple
     set_theme(SOLARIZED_DARK)
     assert "48;2;38;139;210" in lst.view()  # and back
 
 
 def test_set_theme_preserves_explicit_spinner_style():
     sp = Spinner(DOTS, Style().foreground(Color("#ff00ff")))
-    set_theme(CHARM)
+    set_theme(NEON)
     assert "38;2;255;0;255" in sp.view()  # explicit style survives a theme switch
 
 
 def test_set_theme_preserves_custom_progress_fill():
     bar = Progress(width=20).with_solid("#ff0000")
-    set_theme(CHARM)
+    set_theme(NEON)
     assert "38;2;255;0;0" in bar.view_as(1.0)  # custom fill survives a theme switch

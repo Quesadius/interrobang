@@ -3,7 +3,7 @@
 Run any interactive example with ``--theme`` to switch palettes::
 
     python examples/dashboard.py --theme solarized-light
-    python examples/list.py --theme charm
+    python examples/list.py --theme neon
     python examples/spinner.py --theme=solarized-dark
 
 This module is a helper, not an example itself (the leading underscore keeps it
@@ -14,12 +14,12 @@ from __future__ import annotations
 
 import sys
 
-from interrobang import CHARM, SOLARIZED_DARK, SOLARIZED_LIGHT, Theme, run, set_theme
+from interrobang import NEON, SOLARIZED_DARK, SOLARIZED_LIGHT, Theme, run, set_theme
 
 THEMES: dict[str, Theme] = {
     "solarized-dark": SOLARIZED_DARK,
     "solarized-light": SOLARIZED_LIGHT,
-    "charm": CHARM,
+    "neon": NEON,
 }
 
 

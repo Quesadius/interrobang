@@ -22,7 +22,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import termshot  # noqa: E402
 
-from interrobang import CHARM, SOLARIZED_DARK, SOLARIZED_LIGHT, get_theme, set_theme  # noqa: E402
+from interrobang import NEON, SOLARIZED_DARK, SOLARIZED_LIGHT, get_theme, set_theme  # noqa: E402
 from interrobang.components import (  # noqa: E402
     DOTS,
     Column,
@@ -280,7 +280,7 @@ ANIMATIONS = {
 THEME_PREVIEWS = {
     "theme-solarized-dark": SOLARIZED_DARK,
     "theme-solarized-light": SOLARIZED_LIGHT,
-    "theme-charm": CHARM,
+    "theme-neon": NEON,
 }
 
 
