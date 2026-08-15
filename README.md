@@ -201,6 +201,10 @@ And complete, copy-paste-ready mini-apps that do something useful:
 - `form.py` — a multi-field form with Tab navigation and validation
 - `filebrowser.py` — a two-pane file browser with live preview
 - `todo.py` — a persistent to-do list saved to `~/.interrobang-todos.json`
+- `jsonview.py` — a collapsible, syntax-highlighted JSON viewer:
+  `curl -s $API | python examples/jsonview.py`
+- `gitstatus.py` — a lazygit-style staging helper (stage/unstage/commit)
+- `menu.py` — a command-palette launcher that runs the command you pick
 
 Pass `--theme solarized-light` (or `solarized-dark` / `neon`) to any interactive
 example, e.g. `python examples/dashboard.py --theme solarized-light`. The
