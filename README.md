@@ -205,6 +205,10 @@ And complete, copy-paste-ready mini-apps that do something useful:
   `curl -s $API | python examples/jsonview.py`
 - `gitstatus.py` — a lazygit-style staging helper (stage/unstage/commit)
 - `menu.py` — a command-palette launcher that runs the command you pick
+- `logtail.py` — a `tail -f`-style follower with a live filter
+- `keys.py` — a key & mouse inspector (what does this key produce?)
+- `markdown.py` — a scrolling Markdown reader:
+  `python examples/markdown.py README.md`
 
 Pass `--theme solarized-light` (or `solarized-dark` / `neon`) to any interactive
 example, e.g. `python examples/dashboard.py --theme solarized-light`. The
