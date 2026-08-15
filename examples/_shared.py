@@ -55,11 +55,38 @@ def wants_fill(argv: list[str] | None = None) -> bool:
     return "--fill" in args
 
 
-def run_example(model, **kwargs):
+def run_example(model, *, tty: bool = False, **kwargs):
     """Run an example: apply ``--theme``/``--fill`` flags, then start the program.
 
     Always uses the alternate screen. Extra keyword arguments (e.g. ``mouse=True``)
-    are passed through to :func:`interrobang.run`.
+    are passed through to :func:`interrobang.run`, and the final model is returned.
+
+    Pass ``tty=True`` for pipeline-friendly tools (a pager, a picker): when stdin
+    is a pipe rather than a terminal, the UI reads the keyboard from ``/dev/tty``
+    so stdin stays free for piped data and stdout stays free for the result.
     """
     apply_theme_flag()
-    return run(model, alt_screen=True, fill_background=wants_fill(), **kwargs)
+    stream_in = stream_out = None
+    opened = []
+    if tty and not sys.stdin.isatty():
+        try:
+            stream_in = open("/dev/tty", "rb", buffering=0)
+            stream_out = open("/dev/tty", "w")
+            opened = [stream_in, stream_out]
+        except OSError:
+            stream_in = stream_out = None
+    try:
+        return run(
+            model,
+            alt_screen=True,
+            fill_background=wants_fill(),
+            input=stream_in,
+            output=stream_out,
+            **kwargs,
+        )
+    finally:
+        for handle in opened:
+            try:
+                handle.close()
+            except OSError:
+                pass

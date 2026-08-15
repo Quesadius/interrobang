@@ -188,11 +188,23 @@ run any of them with `python examples/<name>.py`:
   `table.py`, `paginator.py`, `help.py`, `filepicker.py` — one per component
 - `mouse.py` — mouse reporting
 - `timer.py` — timers with `tick`
-- `dashboard.py` — a larger app composing several components
+- `dashboard.py` — a larger app composing several components (press `t`/`f` to
+  toggle theme and background fill live)
 - `themes.py` — the built-in themes side by side
 
+And complete, copy-paste-ready mini-apps that do something useful:
+
+- `pager.py` — a file/stdin pager like a tiny `less` (scroll + search):
+  `git log | python examples/pager.py`
+- `pick.py` — an `fzf`-style line picker for pipelines; prints your choice to
+  stdout: `ls | python examples/pick.py | xargs ...`
+- `form.py` — a multi-field form with Tab navigation and validation
+- `filebrowser.py` — a two-pane file browser with live preview
+- `todo.py` — a persistent to-do list saved to `~/.interrobang-todos.json`
+
 Pass `--theme solarized-light` (or `solarized-dark` / `neon`) to any interactive
-example, e.g. `python examples/dashboard.py --theme solarized-light`.
+example, e.g. `python examples/dashboard.py --theme solarized-light`. The
+pager and picker also take `--fill` and work in shell pipelines.
 
 ## Documentation
 
